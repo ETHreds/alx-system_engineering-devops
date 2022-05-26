@@ -1,2 +1,14 @@
 #!/bin/bash
-ls-l
+total 24                                                                                                                                                                                        
+
+-rwxr--r-- 1 root root  16 May 25 18:36 0-current_working_directory                                                                                                                             
+
+-rwxr--r-- 1 root root  15 May 25 18:46 1-listit                                                                                                                                                
+
+-rwxr--r-- 1 root root  19 May 25 19:13 2-bring_me_home                                                                                                                                         
+
+-rwxr--r-- 1 root root  17 May 25 19:09 3-listfiles                                                                                                                                             
+
+-rwxr--r-- 1 root root 201 May 25 19:15 4-listmorefiles                                                                                                                                         
+
+-rw-r--r-- 1 root root  18 May 25 18:33 README.md
