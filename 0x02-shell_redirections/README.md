@@ -1,1 +1,1 @@
-lets learn shell redirections
+My first read me
