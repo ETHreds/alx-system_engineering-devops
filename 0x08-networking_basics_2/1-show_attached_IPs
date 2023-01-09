@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
 # displays all active IPv4 IPs on the machine it is executed on
 
-ifconfig | grep -Po 'inet addr:\K\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+# Get a list of network interfaces
+interfaces=$(ifconfig | grep -E '^[^ ]+:' | cut -d: -f1)
+
+# Loop through the interfaces
+for interface in $interfaces
+do
+  # Get the IP address for the interface
+  ip=$(ifconfig "$interface" | grep 'inet ' | awk '{print $2}')
+  
+  # Check if the IP is a valid IPv4 address
+  if [[ "$ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]
+  then
+    # Print the IP if it is a valid IPv4 address
+    echo "$ip"
+  fi
+done
+
