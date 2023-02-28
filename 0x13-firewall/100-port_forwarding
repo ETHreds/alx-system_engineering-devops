@@ -7,13 +7,14 @@
 #   ufw-before-output
 #   ufw-before-forward
 #
-
-# Adding this line to forward all requests from port 8080 to port 80
+#########################################JoeX
 *nat
 :PREROUTING ACCEPT [0:0]
+# Redirect incoming traffic on port 8080 to port 80
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
-# end of my additions
+
+
 
 # Don't delete these required lines, otherwise there will be errors
 *filter
