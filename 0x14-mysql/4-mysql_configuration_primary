@@ -1,0 +1,24 @@
+# The MySQL  Server configuration file.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+[mysqld]
+pid-file	= /var/run/mysqld/mysqld.pid
+socket		= /var/run/mysqld/mysqld.sock
+datadir		= /var/lib/mysql
+log-error	= /var/log/mysql/error.log
+# By default we only accept connections from localhost
+#bind-address	= 127.0.0.1
+
+#Primary Server ID
+server-id	= 1
+
+#Base name and location of binary logs
+log_bin		= /var/log/mysql/mysql-bin.log
+
+#Database to be replacated
+binlog_do_db	= tyrell_corp
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
