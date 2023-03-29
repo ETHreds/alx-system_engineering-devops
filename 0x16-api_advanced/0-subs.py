@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """
- function that queries the Reddit API 
-  Returns the number of subscribers (not active users, total subscribers) for a given subreddit. 
+Function that queries the Reddit API and returns
+the number of subscribers for a given subreddit.
 """
 import requests
 import sys
+
 
 def number_of_subscribers(subreddit):
     """ Queries to Reddit API """
@@ -24,4 +25,3 @@ def number_of_subscribers(subreddit):
     if 'subscribers' not in dic.get('data'):
         return 0
     return res.json()['data']['subscribers']
-                                             
