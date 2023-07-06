@@ -1,54 +1,27 @@
 #!/usr/bin/env bash
-#configure a custom 404 page
-
-sudo apt-get update
-sudo apt-get install -y nginx
+# Install NGINX server, set mensaje and redirection the server
+apt-get -y update
+apt-get -y install nginx
 ufw allow 'Nginx HTTP'
-sudo chmod -R 755 /var/www
-echo 'Hello World' | sudo tee /var/www/html/index.html
-
-# backup the original config file
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
-
-nginx_default_file="/etc/nginx/sites-available/default"
-header_name="X-Served_By"
-header_value='$hostname'
-
-if grep -q "add_header $header_name" $nginx_default_file; then
-  echo "Header already exists in Nginx default file"
-else
-  sed -i "/server {/a add_header $header_name $header_value;" $nginx_default_file
-  echo "Header added to Nginx default file"
-fi
-
-
-# check if the redirect rule already exists
-if ! grep -q "location /redirect_me" /etc/nginx/sites-available/default; then
-    # add the redirect rule to the config file
-    sudo sed -i 's/location \/redirect_me {\n        rewrite ^\/redirect_me$ https:\/\/twitter.com\/jmagolo_jnr$1 permanent;\n    }\n\n\n\n/g' /etc/nginx/sites-available/default
-else
-    echo "Redirect rule already exists, no changes made."
-fi
-
-# check if the error page already exists
-if ! grep -q "error_page 404 /404.html" /etc/nginx/sites-available/default; then
-    # create the error page file
-    echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
-    # add the error page configuration to the default file
-    sudo bash -c 'echo "error_page 404 /404.html;" >> /etc/nginx/sites-available/default'
-else
-    echo "Error page already exists, no changes made."
-fi
-
-#Test config
-sudo nginx -t
-
-# reload the Nginx
-
-if ! pgrep nginx > /dev/null;
-then
-   sudo service nginx start
-else
-   sudo service nginx restart
-fi
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo mkdir /var/www/error
+echo "Ceci n'est pas une page" > /var/www/error/404.html
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
+    root   /var/www/html;
+    index  index.html index.htm index.nginx-debian.html;
+    
+    server_name _;
+    
+    location /redirect_me {
+        return 301 http://joemagolo.tech/;
+    }
+    error_page 404 /404.html;
+    location /404 {
+      root /var/www/error;
+      internal;
+    }
+}" > /etc/nginx/sites-available/default
+service nginx restart
