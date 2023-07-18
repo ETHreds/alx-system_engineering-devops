@@ -6,5 +6,5 @@ if [ $# -ne 1 ]; then
 fi
 
 # Run the whoami command under the user passed as an argument
-sudo -u $1 whoami
+sudo -u "$1" whoami
 
