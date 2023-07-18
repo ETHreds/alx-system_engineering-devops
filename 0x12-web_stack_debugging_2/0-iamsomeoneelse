@@ -1,10 +1,10 @@
 #!/bin/bash
-#check if an argument has been passed
+# Check if an argument has been passed
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <username>"
     exit 1
 fi
 
 # Run the whoami command under the user passed as an argument
-su $1 -c "whoami"
+sudo -u $1 whoami
 
